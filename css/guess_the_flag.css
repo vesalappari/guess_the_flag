@@ -163,6 +163,20 @@ select {
     border-radius: 20px;
 }
 
+#language-select {
+    padding-inline: 10px;
+    padding-block: 5px;
+    display: block;
+    margin: 10px auto 20px auto;
+    
+    text-align: center;
+}
+
+#language-select:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
 footer {
     background-color: #4CAF50;
     color: white;

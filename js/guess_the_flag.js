@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const flagCodes = ['ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'ao', 'aq', 'ar', 'as', 'at', 'au', 'aw', 'ax', 'az', 'ba', 'bb', 'bd', 'be', 'bf', 'bg', 'bh', 'bi', 'bj', 'bl', 'bm', 'bn', 'bo', 'bq', 'br', 'bs', 'bt', 'bv', 'bw', 'by', 'bz', 'ca', 'cc', 'cd', 'cf', 'cg', 'ch', 'ci', 'ck', 'cl', 'cm', 'cn', 'co', 'cr', 'cu', 'cv', 'cw', 'cx', 'cy', 'cz', 'de', 'dj', 'dk', 'dm', 'do', 'dz', 'ec', 'ee', 'eg', 'eh', 'er', 'es', 'et', 'fi', 'fj', 'fk', 'fm', 'fo', 'fr', 'ga', 'gb', 'gd', 'ge', 'gf', 'gg', 'gh', 'gi', 'gl', 'gm', 'gn', 'gp', 'gq', 'gr', 'gt', 'gu', 'gw', 'gy', 'hk', 'hm', 'hn', 'hr', 'ht', 'hu', 'id', 'ie', 'il', 'im', 'in', 'io', 'iq', 'ir', 'is', 'it', 'je', 'jm', 'jo', 'jp', 'ke', 'kg', 'kh', 'ki', 'km', 'kn', 'kp', 'kr', 'kw', 'ky', 'kz', 'la', 'lb', 'lc', 'li', 'lk', 'lr', 'ls', 'lt', 'lu', 'lv', 'ly', 'ma', 'mc', 'md', 'me', 'mf', 'mg', 'mh', 'mk', 'ml', 'mm', 'mn', 'mo', 'mp', 'mq', 'mr', 'ms', 'mt', 'mu', 'mv', 'mw', 'mx', 'my', 'mz', 'na', 'nc', 'ne', 'nf', 'ng', 'ni', 'nl', 'no', 'np', 'nr', 'nu', 'nz', 'om', 'pa', 'pe', 'pf', 'pg', 'ph', 'pk', 'pl', 'pm', 'pn', 'pr', 'pt', 'pw', 'py', 'qa', 're', 'ro', 'rs', 'ru', 'rw', 'sa', 'sb', 'sc', 'sd', 'se', 'sg', 'sh', 'si', 'sj', 'sk', 'sl', 'sm', 'sn', 'so', 'sr', 'ss', 'st', 'sv', 'sx', 'sy', 'sz', 'tc', 'td', 'tf', 'tg', 'th', 'tj', 'tk', 'tl', 'tm', 'tn', 'to', 'tr', 'tt', 'tv', 'tz', 'ua', 'ug', 'us', 'uy', 'uz', 'va', 'vc', 've', 'vg', 'vi', 'vn', 'vu', 'wf', 'ws', 'ye', 'yt', 'za', 'zm', 'zw'];
     let countryNames = {};
 
-    fetch('../json/countryNames.json')
+    fetch('../json/country_names.json')
         .then(response => response.json())
         .then(data => {
             countryNames = data;
@@ -23,14 +23,16 @@ document.addEventListener('DOMContentLoaded', function() {
             info: 'Choose the correct countries and press submit to see the results',
             submit: 'Submit',
             newGame: 'New Game',
-            tooltip: 'Please choose all five countries'
+            tooltip: 'Please choose all five countries',
+            selectCountry: 'Select a country'
         },
         fi: {
-            heading: 'Voitko arvata kaikki viisi lippua?',
+            heading: 'Arvaatko kaikki viisi lippua?',
             info: 'Valitse oikeat maat ja paina lähetä nähdäksesi tulokset',
             submit: 'Lähetä',
             newGame: 'Uusi peli',
-            tooltip: 'Valitse kaikki viisi maata'
+            tooltip: 'Valitse kaikki viisi maata',
+            selectCountry: 'Valitse maa'
         }
     };
 
@@ -70,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
             selectElement.dataset.flagCode = flagCode;
             const defaultOption = document.createElement('option');
             defaultOption.value = '';
-            defaultOption.textContent = 'Select a country';
+            defaultOption.textContent = translations[languageSelect.value].selectCountry;
             defaultOption.selected = true;
             defaultOption.disabled = true;
             selectElement.appendChild(defaultOption);
@@ -104,8 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    initializeGame();
-
     const submitButton = document.getElementById('submit-button');
     submitButton.addEventListener('click', function() {
         const selects = flagsContainer.querySelectorAll('select');
@@ -133,4 +133,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     updateLanguage(languageSelect.value);
+    initializeGame();
 });
