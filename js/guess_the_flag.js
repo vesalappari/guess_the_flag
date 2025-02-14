@@ -29,6 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
             imgElement.classList.add('flag');
             const selectElement = document.createElement('select');
             selectElement.dataset.flagCode = flagCode;
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Select a country';
+            defaultOption.selected = true;
+            defaultOption.disabled = true;
+            selectElement.appendChild(defaultOption);
             Object.keys(countryNames).sort((a, b) => countryNames[a].localeCompare(countryNames[b])).forEach(code => {
                 const option = document.createElement('option');
                 option.value = code;
