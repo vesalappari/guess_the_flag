@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
             submit: 'Submit',
             newGame: 'New Game',
             tooltip: 'Please choose all five countries',
-            selectCountry: 'Select a country'
+            selectCountry: 'Select a country',
+            result: (correctCount, flagsToSelect) => `You got ${correctCount} out of ${flagsToSelect} correct!`
         },
         fi: {
             heading: 'Arvaatko kaikki viisi lippua?',
@@ -32,7 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
             submit: 'Lähetä',
             newGame: 'Uusi peli',
             tooltip: 'Valitse kaikki viisi maata',
-            selectCountry: 'Valitse maa'
+            selectCountry: 'Valitse maa',
+            result: (correctCount, flagsToSelect) => `Sait ${correctCount} oikein ${flagsToSelect} lipusta!`
         }
     };
 
@@ -124,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         const resultElement = document.getElementById('result');
-        resultElement.textContent = `You got ${correctCount} out of ${flagsToSelect} correct!`;
+        resultElement.textContent = translations[languageSelect.value].result(correctCount, flagsToSelect);
     });
 
     const newGameButton = document.getElementById('new-game-button');

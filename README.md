@@ -1,5 +1,6 @@
 # guess_the_flag
  Game for guessing the country's flag - Javascript, html and css - Low level code
+ html in root and css, img, js and json files in their folders
 
     Supports english and finnish languages
 
