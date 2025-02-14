@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const translations = {
         en: {
-            heading: 'Can You Guess All Five Flags?',
+            heading: 'Can you guess all five flags?',
             info: 'Choose the correct countries and press submit to see the results',
             submit: 'Submit',
             newGame: 'New Game',
