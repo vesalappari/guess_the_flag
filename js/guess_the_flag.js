@@ -43,15 +43,29 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             flagsContainer.appendChild(imgElement);
             flagsContainer.appendChild(selectElement);
+            selectElement.addEventListener('change', checkSelections);
         });
+        checkSelections();
+    }
+
+    function checkSelections() {
+        const selects = flagsContainer.querySelectorAll('select');
+        const submitButton = document.getElementById('submit-button');
+        let allSelected = true;
+        selects.forEach(select => {
+            if (select.value === '') {
+                allSelected = false;
+            }
+        });
+        submitButton.disabled = !allSelected;
     }
 
     initializeGame();
 
     const submitButton = document.getElementById('submit-button');
     submitButton.addEventListener('click', function() {
-        let correctCount = 0;
         const selects = flagsContainer.querySelectorAll('select');
+        let correctCount = 0;
         selects.forEach(select => {
             if (select.value === select.dataset.flagCode) {
                 correctCount++;

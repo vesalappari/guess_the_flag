@@ -51,6 +51,27 @@ main {
     transform: scale(1.1);
 }
 
+.buttons button:disabled {
+    background-color: rgba(76, 175, 80, 0.5);
+    cursor: not-allowed;
+}
+
+.buttons button:disabled:hover::after {
+    content: "Please choose all five countries";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 1;
+    visibility: visible;
+}
+
 .results {
     text-align: center;
 }
