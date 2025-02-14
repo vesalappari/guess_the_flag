@@ -68,7 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let correctCount = 0;
         selects.forEach(select => {
             if (select.value === select.dataset.flagCode) {
+                select.style.backgroundColor = 'green';
+                select.style.color = 'white';
                 correctCount++;
+            } else {
+                select.style.backgroundColor = 'red';
+                select.style.color = 'white';
             }
         });
         const resultElement = document.getElementById('result');
