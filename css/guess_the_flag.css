@@ -124,7 +124,7 @@ main {
 }
 
 .flags-game {
-    background-color: rgba(211, 211, 211, 0.5); /* lightgray with 50% transparency */
+    background-color: rgba(211, 211, 211, 0.5);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

@@ -7,6 +7,35 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     const flagsToSelect = 5;
     const selectedFlags = [];
+    const languageSelect = document.getElementById('language-select');
+    const h2Element = document.querySelector('.flags-game h2');
+    const infoMarker = document.querySelector('.info-marker');
+
+    const translations = {
+        en: {
+            heading: 'Can You Guess All Five Flags?',
+            info: 'Choose the correct countries and press submit to see the results',
+            submit: 'Submit',
+            newGame: 'New Game'
+        },
+        fi: {
+            heading: 'Voitko arvata kaikki viisi lippua?',
+            info: 'Valitse oikeat maat ja paina lähetä nähdäksesi tulokset',
+            submit: 'Lähetä',
+            newGame: 'Uusi peli'
+        }
+    };
+
+    function updateLanguage(language) {
+        h2Element.textContent = translations[language].heading;
+        infoMarker.setAttribute('title', translations[language].info);
+        document.getElementById('submit-button').textContent = translations[language].submit;
+        document.getElementById('new-game-button').textContent = translations[language].newGame;
+    }
+
+    languageSelect.addEventListener('change', function() {
+        updateLanguage(this.value);
+    });
 
     function initializeGame() {
         flagsContainer.innerHTML = '';
@@ -87,4 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeGame();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Set initial language
+    updateLanguage(languageSelect.value);
 });
