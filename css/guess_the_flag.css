@@ -14,10 +14,16 @@ header {
 
 h1 {
     margin: 0;
+    text-align: center;
+    color: white;
+    font-size: 2.5em;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
 }
 h2 {
     margin: 0;
     text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 p {
@@ -27,6 +33,9 @@ p {
 
 main {
     padding: 20px;
+    background-image: url('../img/scribbled-world-map/8017.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 .buttons {
@@ -115,10 +124,12 @@ main {
 }
 
 .flags-game {
-    background-color: lightgray;
+    background-color: rgba(211, 211, 211, 0.5); /* lightgray with 50% transparency */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 #flags-container {
@@ -132,7 +143,8 @@ main {
     width: auto;
     height: 240px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
 }
 
 
@@ -147,12 +159,15 @@ main {
     font-size: 16px;
 }
 
+select {
+    border-radius: 20px;
+}
+
 footer {
     background-color: #4CAF50;
     color: white;
     text-align: center;
     padding: 1em 0;
-    /* position: fixed; */
     width: 100%;
     bottom: 0;
 }
