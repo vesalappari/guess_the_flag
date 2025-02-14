@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             imgElement.classList.add('flag');
             const selectElement = document.createElement('select');
             selectElement.dataset.flagCode = flagCode;
-            Object.keys(countryNames).forEach(code => {
+            Object.keys(countryNames).sort((a, b) => countryNames[a].localeCompare(countryNames[b])).forEach(code => {
                 const option = document.createElement('option');
                 option.value = code;
                 option.textContent = countryNames[code];
