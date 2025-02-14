@@ -66,7 +66,7 @@ main {
 }
 
 .buttons button:disabled:hover::after {
-    content: "Please choose all five countries";
+    content: attr(data-tooltip);
     position: absolute;
     top: 100%;
     left: 50%;
