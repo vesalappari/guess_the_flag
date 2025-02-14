@@ -8,30 +8,58 @@ document.addEventListener('DOMContentLoaded', function() {
     const flagsToSelect = 5;
     const selectedFlags = [];
 
-    while (selectedFlags.length < flagsToSelect) {
-        const randomIndex = Math.floor(Math.random() * flagCodes.length);
-        const flagCode = flagCodes[randomIndex];
-        const flagFileName = `${flagCode}.png`;
-        if (!selectedFlags.includes(flagFileName)) {
-            selectedFlags.push(flagFileName);
+    function initializeGame() {
+        flagsContainer.innerHTML = '';
+        selectedFlags.length = 0;
+        while (selectedFlags.length < flagsToSelect) {
+            const randomIndex = Math.floor(Math.random() * flagCodes.length);
+            const flagCode = flagCodes[randomIndex];
+            const flagFileName = `${flagCode}.png`;
+            if (!selectedFlags.includes(flagFileName)) {
+                selectedFlags.push(flagFileName);
+            }
         }
+
+        selectedFlags.forEach(flag => {
+            const flagCode = flag.split('.')[0];
+            const countryName = countryNames[flagCode];
+            const imgElement = document.createElement('img');
+            imgElement.src = `${flagFolder}${flag}`;
+            imgElement.alt = `Flag of ${countryName}`;
+            imgElement.classList.add('flag');
+            const selectElement = document.createElement('select');
+            selectElement.dataset.flagCode = flagCode;
+            Object.keys(countryNames).forEach(code => {
+                const option = document.createElement('option');
+                option.value = code;
+                option.textContent = countryNames[code];
+                selectElement.appendChild(option);
+            });
+            flagsContainer.appendChild(imgElement);
+            flagsContainer.appendChild(selectElement);
+        });
     }
 
-    selectedFlags.forEach(flag => {
-        const flagCode = flag.split('.')[0];
-        const countryName = countryNames[flagCode];
-        const imgElement = document.createElement('img');
-        imgElement.src = `${flagFolder}${flag}`;
-        imgElement.alt = `Flag of ${countryName}`;
-        imgElement.classList.add('flag');
-        const selectElement = document.createElement('select');
-        Object.keys(countryNames).forEach(code => {
-            const option = document.createElement('option');
-            option.value = code;
-            option.textContent = countryNames[code];
-            selectElement.appendChild(option);
+    initializeGame();
+
+    const submitButton = document.getElementById('submit-button');
+    submitButton.addEventListener('click', function() {
+        let correctCount = 0;
+        const selects = flagsContainer.querySelectorAll('select');
+        selects.forEach(select => {
+            if (select.value === select.dataset.flagCode) {
+                correctCount++;
+            }
         });
-        flagsContainer.appendChild(imgElement);
-        flagsContainer.appendChild(selectElement);
+        const resultElement = document.getElementById('result');
+        resultElement.textContent = `You got ${correctCount} out of ${flagsToSelect} correct!`;
+    });
+
+    const newGameButton = document.getElementById('new-game-button');
+    newGameButton.addEventListener('click', function() {
+        const resultElement = document.getElementById('result');
+        resultElement.textContent = '';
+        initializeGame();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
