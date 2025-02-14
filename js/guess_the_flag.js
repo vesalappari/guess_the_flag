@@ -42,11 +42,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('submit-button').textContent = translations[language].submit;
         document.getElementById('new-game-button').textContent = translations[language].newGame;
         document.getElementById('submit-button').setAttribute('data-tooltip', translations[language].tooltip);
+        const selects = flagsContainer.querySelectorAll('select');
+        selects.forEach(select => {
+            select.querySelector('option[value=""]').textContent = translations[language].selectCountry;
+        });
     }
 
     languageSelect.addEventListener('change', function() {
         updateLanguage(this.value);
-        initializeGame();
     });
 
     function initializeGame() {
