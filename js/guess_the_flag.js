@@ -116,14 +116,40 @@ document.addEventListener('DOMContentLoaded', function() {
         const selects = flagsContainer.querySelectorAll('select');
         let correctCount = 0;
         selects.forEach(select => {
+            const flagCode = select.dataset.flagCode;
+            const countryName = countryNames[flagCode][languageSelect.value];
+            const correctCountryElement = document.createElement('div');
+            correctCountryElement.style.display = 'flex';
+            correctCountryElement.style.alignItems = 'center';
+            correctCountryElement.style.marginTop = '5px';
+
+            const correctFlagImg = document.createElement('img');
+            correctFlagImg.src = `${flagFolder}${flagCode}.png`;
+            correctFlagImg.alt = `Flag of ${countryName}`;
+            correctFlagImg.classList.add('flag');
+            correctFlagImg.style.width = '30px';
+            correctFlagImg.style.height = '20px';
+            correctFlagImg.style.marginRight = '5px';
+
+            const correctCountryName = document.createElement('span');
+            correctCountryName.textContent = countryName;
+
+            correctCountryElement.appendChild(correctFlagImg);
+            correctCountryElement.appendChild(correctCountryName);
+
             if (select.value === select.dataset.flagCode) {
                 select.style.backgroundColor = 'green';
                 select.style.color = 'white';
+                correctCountryName.classList.add('correct-guess');
                 correctCount++;
             } else {
                 select.style.backgroundColor = 'red';
                 select.style.color = 'white';
+                correctCountryName.classList.add('incorrect-guess');
             }
+
+            select.disabled = true;
+            select.parentNode.insertBefore(correctCountryElement, select.nextSibling);
         });
         const resultElement = document.getElementById('result');
         resultElement.textContent = translations[languageSelect.value].result(correctCount, flagsToSelect);
