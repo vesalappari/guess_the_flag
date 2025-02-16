@@ -4,7 +4,7 @@
 
     Supports english and finnish languages
 
-    This project contains the flags of all 254 countries downloaded from https://flagpedia.net/download/images on 14th of february in 2025
+    This project contains the flags of all 254 countries downloaded from https://flagpedia.net/download/images on 14th of february in 2025. Some country codes have same flag (Norway, Bouvet island and Svalbard and Jan Mayen)
 
     Background image designed by starline / Freepik http://www.freepik.com
 
