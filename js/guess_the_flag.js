@@ -175,8 +175,17 @@ document.addEventListener('DOMContentLoaded', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 1000);
         setTimeout(() => {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }, 2000);
+            let scrollCount = 0;
+            const scrollInterval = setInterval(() => {
+            if (scrollCount < 4) {
+                window.scrollBy({ top: 300, behavior: 'smooth' });
+                scrollCount++;
+            } else {
+                clearInterval(scrollInterval);
+            }
+            }, 1000);
+        }, 1000);
+        
     });
 
     const newGameButton = document.getElementById('new-game-button');
