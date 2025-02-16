@@ -89,7 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             flagsContainer.appendChild(imgElement);
             flagsContainer.appendChild(selectElement);
-            selectElement.addEventListener('change', checkSelections);
+            selectElement.addEventListener('change', function() {
+                checkSelections();
+                window.scrollBy({ top: 300, behavior: 'smooth' });
+            });
         });
         checkSelections();
     }
