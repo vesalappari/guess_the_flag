@@ -1,3 +1,5 @@
+let submitted = false;
+
 document.addEventListener('DOMContentLoaded', function() {
     const flagsContainer = document.getElementById('flags-container');
     const flagFolder = 'img/flags_h240/';
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             info: 'Choose the correct countries and press submit to see the results',
             submit: 'Submit',
             newGame: 'New Game',
-            tooltip: 'Please choose all five countries',
+            tooltip: 'Please choose all five countries or press new game',
             selectCountry: 'Select a country',
             result: (correctCount, flagsToSelect) => `You got ${correctCount} out of ${flagsToSelect} correct!`
         },
@@ -32,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             info: 'Valitse oikeat maat ja paina lähetä nähdäksesi tulokset',
             submit: 'Lähetä',
             newGame: 'Uusi peli',
-            tooltip: 'Valitse kaikki viisi maata',
+            tooltip: 'Valitse kaikki viisi maata tai paina uusi peli',
             selectCountry: 'Valitse maa',
             result: (correctCount, flagsToSelect) => `Sait ${correctCount} oikein ${flagsToSelect} lipusta!`
         }
@@ -55,6 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function initializeGame() {
+        if (submitted) {
+            submitted = false;
+        };
         flagsContainer.innerHTML = '';
         selectedFlags.length = 0;
         while (selectedFlags.length < flagsToSelect) {
@@ -116,6 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const submitButton = document.getElementById('submit-button');
     submitButton.addEventListener('click', function() {
+        if (submitted) {
+            return;
+        }
+        submitted = true;
+        submitButton.disabled = true;
         const selects = flagsContainer.querySelectorAll('select');
         let correctCount = 0;
         selects.forEach(select => {
@@ -156,8 +166,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         const resultElement = document.getElementById('result');
         resultElement.textContent = translations[languageSelect.value].result(correctCount, flagsToSelect);
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 1000);
         setTimeout(() => {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }, 2000);
