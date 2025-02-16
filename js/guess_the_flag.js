@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const flagFolder = 'img/flags_h240/';
     let flagCodes = [];
     let countryNames = {};
-
     const flagsToSelect = 5;
     const selectedFlags = [];
     const languageSelect = document.getElementById('language-select');
@@ -33,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    /* Three county codes are using same flags, so they are equivalent */
+    /* If user chooses one of the equivalent flags, it is considered correct */
     const equivalentFlags = {
         "no": ["bv", "sj"],
         "bv": ["no", "sj"],
@@ -180,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             let scrollCount = 0;
             const scrollInterval = setInterval(() => {
-            if (scrollCount < 5) {
+            if (submitted && (scrollCount < 5 || window.scrollY > 0)) {
                 window.scrollBy({ top: 300, behavior: 'smooth' });
                 scrollCount++;
             } else {
