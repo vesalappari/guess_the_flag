@@ -33,6 +33,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    const equivalentFlags = {
+        "no": ["bv", "sj"],
+        "bv": ["no", "sj"],
+        "sj": ["no", "bv"]
+    };
+
     function updateLanguage(language) {
         h2Element.textContent = translations[language].heading;
         infoMarker.setAttribute('title', translations[language].info);
@@ -148,7 +154,10 @@ document.addEventListener('DOMContentLoaded', function() {
             correctCountryElement.appendChild(correctFlagImg);
             correctCountryElement.appendChild(correctCountryName);
 
-            if (select.value === select.dataset.flagCode) {
+            const selectedValue = select.value;
+            const isCorrect = selectedValue === flagCode || (equivalentFlags[flagCode] && equivalentFlags[flagCode].includes(selectedValue));
+
+            if (isCorrect) {
                 select.style.backgroundColor = 'green';
                 select.style.color = 'white';
                 correctCountryName.classList.add('correct-guess');
