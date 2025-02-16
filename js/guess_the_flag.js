@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             select.disabled = true;
+            select.classList.add('hidden');
             select.parentNode.insertBefore(correctCountryElement, select.nextSibling);
         });
         const resultElement = document.getElementById('result');
