@@ -171,14 +171,14 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             let scrollCount = 0;
             const scrollInterval = setInterval(() => {
-            if (scrollCount < 4) {
+            if (scrollCount < 5) {
                 window.scrollBy({ top: 300, behavior: 'smooth' });
                 scrollCount++;
             } else {
                 clearInterval(scrollInterval);
             }
-            }, 1000);
-        }, 1000);
+            }, 1500);
+        }, 1500);
         
     });
 
