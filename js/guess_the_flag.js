@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    /* Three county codes are using same flags, so they are equivalent */
+    /* Three country codes are using same flags, so they are equivalent */
     /* If user chooses one of the equivalent flags, it is considered correct */
     const equivalentFlags = {
         "no": ["bv", "sj"],
