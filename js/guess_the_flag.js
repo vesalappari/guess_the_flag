@@ -153,6 +153,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         const resultElement = document.getElementById('result');
         resultElement.textContent = translations[languageSelect.value].result(correctCount, flagsToSelect);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }, 2000);
     });
 
     const newGameButton = document.getElementById('new-game-button');
