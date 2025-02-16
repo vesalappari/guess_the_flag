@@ -49,6 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const selects = flagsContainer.querySelectorAll('select');
         selects.forEach(select => {
             select.querySelector('option[value=""]').textContent = translations[language].selectCountry;
+            Array.from(select.options).forEach(option => {
+                if (option.value) {
+                    option.textContent = countryNames[option.value][language];
+                }
+            });
         });
     }
 
