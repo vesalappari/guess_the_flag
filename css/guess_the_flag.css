@@ -70,17 +70,15 @@ main {
     position: absolute;
     top: 100%;
     left: 50%;
-    min-width: 200px;
     transform: translateX(-50%);
     background-color: #4CAF50;
     color: #fff;
     padding: 5px;
     margin-top: 5px;
     border-radius: 5px;
-    white-space: pre-line;
-    box-sizing: border-box;
-    text-align: center;
+    white-space: nowrap;
     opacity: 1;
+    visibility: visible;
 }
 
 .results {
