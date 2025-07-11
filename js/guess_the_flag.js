@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const translations = {
         en: {
             heading: 'Can you guess all five flags?',
-            info: 'Choose the correct countries and press submit to see the results',
-            submit: 'Submit',
+            info: 'Choose the correct countries and press guess to see the results',
+            submit: 'Guess',
             newGame: 'New Game',
             tooltip: 'Please choose all five countries or press new game',
             selectCountry: 'Select a country',
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         fi: {
             heading: 'Arvaatko kaikki viisi lippua?',
-            info: 'Valitse oikeat maat ja paina lähetä nähdäksesi tulokset',
-            submit: 'Lähetä',
+            info: 'Valitse oikeat maat ja paina arvaa nähdäksesi tulokset',
+            submit: 'Arvaa',
             newGame: 'Uusi peli',
             tooltip: 'Valitse kaikki viisi maata tai paina uusi peli',
             selectCountry: 'Valitse maa',
@@ -92,20 +92,16 @@ document.addEventListener('DOMContentLoaded', function() {
             defaultOption.disabled = true;
             selectElement.appendChild(defaultOption);
 
-            // Prepare 4 random wrong answers + correct answer
             let allCodes = Object.keys(countryNames).filter(code => code !== flagCode);
-            // If flagCode is one of the equivalent flags, exclude the other two from wrong answers
             if (["no", "bv", "sj"].includes(flagCode)) {
                 allCodes = allCodes.filter(code => !["no", "bv", "sj"].includes(code));
             }
-            // Shuffle allCodes
             for (let i = allCodes.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [allCodes[i], allCodes[j]] = [allCodes[j], allCodes[i]];
             }
             const wrongCodes = allCodes.slice(0, 4);
             const optionCodes = [flagCode, ...wrongCodes];
-            // Shuffle optionCodes so correct answer is not always first
             for (let i = optionCodes.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [optionCodes[i], optionCodes[j]] = [optionCodes[j], optionCodes[i]];
@@ -137,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         submitButton.disabled = !allSelected;
+        newGameButton.disabled = allSelected;
         if (!allSelected) {
             submitButton.setAttribute('data-tooltip', translations[languageSelect.value].tooltip);
         } else {
@@ -151,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         submitted = true;
         submitButton.disabled = true;
+        newGameButton.disabled = false;
         const selects = flagsContainer.querySelectorAll('select');
         let correctCount = 0;
         selects.forEach(select => {
