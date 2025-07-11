@@ -70,15 +70,17 @@ main {
     position: absolute;
     top: 100%;
     left: 50%;
+    min-width: 200px;
     transform: translateX(-50%);
     background-color: #4CAF50;
     color: #fff;
     padding: 5px;
     margin-top: 5px;
     border-radius: 5px;
-    white-space: nowrap;
+    white-space: pre-line;
+    box-sizing: border-box;
+    text-align: center;
     opacity: 1;
-    visibility: visible;
 }
 
 .results {
@@ -114,10 +116,15 @@ main {
     color: #fff;
     padding: 5px;
     border-radius: 5px;
-    white-space: nowrap;
+    white-space: pre-line;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s;
+    max-width: 90vw;
+    box-sizing: border-box;
+    text-align: center;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .info-marker:hover::after {
