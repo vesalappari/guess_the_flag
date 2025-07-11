@@ -91,12 +91,32 @@ document.addEventListener('DOMContentLoaded', function() {
             defaultOption.selected = true;
             defaultOption.disabled = true;
             selectElement.appendChild(defaultOption);
-            Object.keys(countryNames).sort((a, b) => countryNames[a][languageSelect.value].localeCompare(countryNames[b][languageSelect.value])).forEach(code => {
+
+            // Prepare 4 random wrong answers + correct answer
+            let allCodes = Object.keys(countryNames).filter(code => code !== flagCode);
+            // If flagCode is one of the equivalent flags, exclude the other two from wrong answers
+            if (["no", "bv", "sj"].includes(flagCode)) {
+                allCodes = allCodes.filter(code => !["no", "bv", "sj"].includes(code));
+            }
+            // Shuffle allCodes
+            for (let i = allCodes.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allCodes[i], allCodes[j]] = [allCodes[j], allCodes[i]];
+            }
+            const wrongCodes = allCodes.slice(0, 4);
+            const optionCodes = [flagCode, ...wrongCodes];
+            // Shuffle optionCodes so correct answer is not always first
+            for (let i = optionCodes.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [optionCodes[i], optionCodes[j]] = [optionCodes[j], optionCodes[i]];
+            }
+            optionCodes.forEach(code => {
                 const option = document.createElement('option');
                 option.value = code;
                 option.textContent = countryNames[code][languageSelect.value];
                 selectElement.appendChild(option);
             });
+
             flagsContainer.appendChild(imgElement);
             flagsContainer.appendChild(selectElement);
             selectElement.addEventListener('change', function() {
