@@ -175,20 +175,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         const resultElement = document.getElementById('result');
         resultElement.textContent = translations[languageSelect.value].result(correctCount, flagsToSelect);
-        setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 1000);
-        setTimeout(() => {
-            let scrollCount = 0;
-            const scrollInterval = setInterval(() => {
-            if (submitted && (scrollCount < 5 || window.scrollY > 0)) {
-                window.scrollBy({ top: 300, behavior: 'smooth' });
-                scrollCount++;
-            } else {
-                clearInterval(scrollInterval);
-            }
-            }, 1500);
-        }, 1500);
         
     });
 
