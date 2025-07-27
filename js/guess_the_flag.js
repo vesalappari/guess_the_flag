@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const languageSelect = document.getElementById('language-select');
     const h2Element = document.querySelector('.flags-game h2');
     const infoMarker = document.querySelector('.info-marker');
+    const continentSelect = document.getElementById('continent-select');
 
     const translations = {
         en: {
@@ -32,6 +33,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    const continentNames = {
+        en: {
+            world: "🌍 All Continents",
+            africa: "Africa",
+            asia: "Asia",
+            australia: "Australia",
+            europe: "Europe",
+            "north-america": "North America",
+            "south-america": "South America"
+        },
+        fi: {
+            world: "🌍 Kaikki maanosat",
+            africa: "Afrikka",
+            asia: "Aasia",
+            australia: "Australia",
+            europe: "Eurooppa",
+            "north-america": "Pohjois-Amerikka",
+            "south-america": "Etelä-Amerikka"
+        }
+    };
+
     /* Three country codes are using same flags, so they are equivalent */
     /* If user chooses one of the equivalent flags, it is considered correct */
     const equivalentFlags = {
@@ -40,12 +62,55 @@ document.addEventListener('DOMContentLoaded', function() {
         "sj": ["no", "bv"]
     };
 
+    // Mapping from continent to country codes
+    const continentCountries = {
+        africa: [
+            "dz","ao","bj","bw","bf","bi","cm","cv","cf","td","km","cg","cd","dj","eg","gq","er","et","ga","gm","gh","gn","gw","ci","ke","ls","lr","ly","mg","mw","ml","mr","mu","yt","ma","mz","na","ne","ng","rw","re","sh","st","sn","sc","sl","so","za","ss","sd","sz","tz","tg","tn","ug","eh","zm","zw"
+        ],
+        asia: [
+            "af","am","az","bh","bd","bt","bn","mm","kh","cn","cx","cc","ge","hk","in","id","ir","iq","il","jp","jo","kz","kp","kr","kw","kg","la","lb","mo","my","mv","mn","np","om","pk","ps","ph","qa","sa","sg","lk","sy","tw","tj","th","tl","tm","ae","uz","vn","ye"
+        ],
+        australia: [
+            "au","fj","pf","gu","ki","mh","fm","nr","nc","nz","nu","mp","pw","pg","sb","ws","tk","to","tv","vu"
+        ],
+        europe: [
+            "al","ad","at","by","be","ba","bg","hr","cy","cz","dk","ee","fo","fi","fr","de","gi","gr","va","hu","is","ie","im","it","je","lv","li","lt","lu","mt","mc","md","me","nl","mk","no","pl","pt","ro","ru","sm","rs","sk","si","es","sj","se","ch","ua","gb","gg","ax","bl","mf","pm"
+        ],
+        "north-america": [
+            "ag","ai","aw","bs","bb","bz","bm","ca","ky","cr","cu","cw","dm","do","sv","gl","gd","gp","gt","ht","hn","jm","mq","mx","ms","ni","pa","pr","sx","kn","lc","vc","tt","tc","vg","vi","us","um"
+        ],
+        "south-america": [
+            "ar","bo","br","cl","co","ec","fk","gf","gy","py","pe","sr","uy","ve"
+        ]
+    };
+
+    function getFilteredFlagCodes() {
+        const continent = continentSelect.value;
+        if (continent === "world") {
+            // Include all continents + Antarctica flags
+            const allCodes = [...flagCodes];
+            return allCodes;
+        }
+        return continentCountries[continent] || [];
+    }
+
+    function updateContinentNames(language) {
+        const continentSelect = document.getElementById('continent-select');
+        Array.from(continentSelect.options).forEach(option => {
+            const val = option.value;
+            if (continentNames[language][val]) {
+                option.textContent = continentNames[language][val];
+            }
+        });
+    }
+
     function updateLanguage(language) {
         h2Element.textContent = translations[language].heading;
         infoMarker.setAttribute('title', translations[language].info);
         document.getElementById('submit-button').textContent = translations[language].submit;
         document.getElementById('new-game-button').textContent = translations[language].newGame;
         document.getElementById('submit-button').setAttribute('data-tooltip', translations[language].tooltip);
+        updateContinentNames(language);
         const selects = flagsContainer.querySelectorAll('select');
         selects.forEach(select => {
             select.querySelector('option[value=""]').textContent = translations[language].selectCountry;
@@ -61,15 +126,27 @@ document.addEventListener('DOMContentLoaded', function() {
         updateLanguage(this.value);
     });
 
+    continentSelect.addEventListener('change', function() {
+        initializeGame();
+    });
+
     function initializeGame() {
         if (submitted) {
             submitted = false;
         };
         flagsContainer.innerHTML = '';
         selectedFlags.length = 0;
+        const filteredFlagCodes = getFilteredFlagCodes();
+        if (filteredFlagCodes.length < flagsToSelect) {
+            // Not enough flags for this continent, show message and return
+            flagsContainer.innerHTML = `<p style="color:red;">Not enough flags for this continent!</p>`;
+            document.getElementById('submit-button').disabled = true;
+            document.getElementById('new-game-button').disabled = false;
+            return;
+        }
         while (selectedFlags.length < flagsToSelect) {
-            const randomIndex = Math.floor(Math.random() * flagCodes.length);
-            const flagCode = flagCodes[randomIndex];
+            const randomIndex = Math.floor(Math.random() * filteredFlagCodes.length);
+            const flagCode = filteredFlagCodes[randomIndex];
             const flagFileName = `${flagCode}.png`;
             if (!selectedFlags.includes(flagFileName)) {
                 selectedFlags.push(flagFileName);
